@@ -1,34 +1,33 @@
 package com.TimeSheetApp.Server;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
 
-    private final int port = 4848;
-    private static Server instance = null;
+    private int port;
 
-    private Server(){
-
-    }
-
-    public static Server getInstance(){
-        if(instance == null){
-            instance = new Server();
-        }
-
-        return instance;
+    public Server(int portNumber){
+        this.port = portNumber;
     }
 
     public void startServer(){
-        try{
-            ServerSocket serverSocket = new ServerSocket(port);
-            Socket connection = serverSocket.accept();
+        try {
+            ServerSocket serverSocket = new ServerSocket(this.port);
+            System.out.println("Server Is Starting");
+            System.out.println(serverSocket.getLocalSocketAddress());
+            while(true){
+                Socket socket = serverSocket.accept();
+
+
+            }
         }catch (IOException e){
-            e.printStackTrace();
+            System.err.println("Could Not Start Server On This Port");
         }
 
     }
-
 }

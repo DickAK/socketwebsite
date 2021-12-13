@@ -1,8 +1,11 @@
 package com.TimeSheetApp;
 
+import com.TimeSheetApp.Server.Server;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        Server server = new Server(4848);
+        server.startServer();
     }
 }
