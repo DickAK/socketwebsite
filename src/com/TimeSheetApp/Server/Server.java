@@ -1,5 +1,7 @@
 package com.TimeSheetApp.Server;
 
+import com.TimeSheetApp.Response.HTMLResponse;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +25,9 @@ public class Server {
             while(true){
                 Socket socket = serverSocket.accept();
 
-
+                HTMLResponse response = new HTMLResponse(socket);
+                response.generateResponse();
+                response=null;
             }
         }catch (IOException e){
             System.err.println("Could Not Start Server On This Port");
