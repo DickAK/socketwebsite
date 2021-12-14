@@ -27,10 +27,88 @@ public class HTMLResponse {
                  "<head>" +
                  "    <meta charset=\"UTF-8\">" +
                  "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
-                 "    <title>Document</title>" +
+                 "    <title>Socket Server</title>" +
+                 "    <style> " +
+                 "      body{" +
+                 "          margin: 0;" +
+                 "          padding: 0;" +
+                 "      }" +
+                 " {box-sizing: border-box;}\n" +
+                 "\n" +
+
+                 "\n" +
+                 "/* The popup chat */\n" +
+                 ".form-popup {\n" +
+                 "  display: none;\n" +
+                 "  position: fixed;\n" +
+                 "  bottom: 0;\n" +
+                 "  right: 15px;\n" +
+                 "  border: 3px solid #f1f1f1;\n" +
+                 "  z-index: 9;\n" +
+                 "}\n" +
+                 "\n" +
+                 "/* the form container */\n" +
+                 ".form-container {\n" +
+                 "  max-width: 300px;\n" +
+                 "  padding: 10px;\n" +
+                 "  background-color: white;\n" +
+                 "}\n" +
+                 "\n" +
+                 "/* Full-width textarea */\n" +
+                 ".form-container textarea {\n" +
+                 "  width: 100%;\n" +
+                 "  padding: 15px;\n" +
+                 "  margin: 5px 0 22px 0;\n" +
+                 "  border: none;\n" +
+                 "  background: #f1f1f1;\n" +
+                 "  resize: none;\n" +
+                 "  min-height: 200px;\n" +
+                 "}\n" +
+                 "\n" +
+                 "/* When the textarea gets focus, do something */\n" +
+                 ".form-container textarea:focus {\n" +
+                 "  background-color: #ddd;\n" +
+                 "  outline: none;\n" +
+                 "}\n" +
+                 "\n" +
+                 "/* Set a style for the submit/login button */\n" +
+                 ".form-container .btn {\n" +
+                 "  background-color: #04AA6D;\n" +
+                 "  color: white;\n" +
+                 "  padding: 16px 20px;\n" +
+                 "  border: none;\n" +
+                 "  cursor: pointer;\n" +
+                 "  width: 100%;\n" +
+                 "  margin-bottom:10px;\n" +
+                 "  opacity: 0.8;\n" +
+                 "}\n" +
+                 "\n" +
+                 "/* cancel button */\n" +
+                 ".form-container .cancel {\n" +
+                 "  background-color: red;\n" +
+                 "}\n" +
+                 "\n" +
+                 "/* hover effects to buttons */\n" +
+                 ".form-container .btn:hover, .open-button:hover {\n" +
+                 "  opacity: 1;\n" +
+                 "} "+
+                 "    </style>" +
                  "</head>" +
                  "<body>") ;
 
+         stringBuilder.append("<h1> Welcome this is a java socket server chat app </h1>");
+
+         stringBuilder.append(" <div class=\"chat-popup\" id=\"myForm\">\n" +
+                 "  <form action=\"/action_page.php\" class=\"form-container\">\n" +
+                 "    <h1>Chat</h1>\n" +
+                 "\n" +
+                 "    <label for=\"msg\"><b>Message</b></label>\n" +
+                 "    <textarea placeholder=\"Type message..\" name=\"msg\" required></textarea>\n" +
+                 "\n" +
+                 "    <button type=\"submit\" class=\"btn\">Send</button>\n" +
+                 "    <button type=\"button\" class=\"btn cancel\" onclick=\"closeForm()\">Close</button>\n" +
+                 "  </form>\n" +
+                 "</div> ");
          stringBuilder.append("</body></html>");
          return stringBuilder.toString();
 
@@ -44,7 +122,7 @@ public class HTMLResponse {
              printStream.println(createHtmlPage());
              printStream.close();
          }catch (IOException e){
-             System.err.println("Issue grabing the output stream to the client");
+             System.err.println("Issue sending the output stream to the client");
          }
      }
 
