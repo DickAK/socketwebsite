@@ -39,18 +39,30 @@ public class FileService {
         }
     }
 
-
-
-    public void readFromFile(){
+    public String readFromFile(){
+        StringBuilder fileContents = new StringBuilder();
         try (BufferedReader fileReader = Files.newBufferedReader(this.filePath)){
-            String fileContents = null;
-            while((fileContents = fileReader.readLine()) != null){
-                System.out.println(fileContents);
-            }
+
+            do {
+                fileContents.append(String.format("%s \r\n" ,fileReader.readLine()));
+            }while (fileReader.ready());
+
         }catch (IOException e){
             System.out.println("cannot find this file");
         }
+
+        System.out.println(fileContents.toString());
+        return fileContents.toString();
     }
 
-
+    public void writeToFile(String contentToWrite){
+        StringBuilder fileContent = new StringBuilder();
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath)){
+            fileContent.append(readFromFile());
+            fileContent.append(contentToWrite);
+            bufferedWriter.write(String.valueOf(fileContent));
+        }catch(IOException e){
+            System.err.println("had issues opening this file for writing");
+        }
+    }
 }

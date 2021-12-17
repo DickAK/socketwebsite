@@ -10,6 +10,8 @@ public class Main {
         //server.startServer();
         FileService fileService = new FileService();
         fileService.readFromFile();
+        //fileService.writeToFile("Hello, I am Ajani \nI wonder if this will overWrite the old content?");
+        //fileService.readFromFile();
 
     }
 }
