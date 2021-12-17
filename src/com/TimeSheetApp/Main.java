@@ -9,6 +9,7 @@ public class Main {
         Server server = new Server(4848);
         //server.startServer();
         FileService fileService = new FileService();
+        fileService.readFromFile();
 
     }
 }

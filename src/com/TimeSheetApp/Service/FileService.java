@@ -2,8 +2,7 @@ package com.TimeSheetApp.Service;
 
 import com.TimeSheetApp.Exceptions.FileException;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -17,28 +16,41 @@ public class FileService {
         checkFile();
     }
 
+    private File file = null;
+    private final Path filePath = Paths.get("C:\\socketwebsite\\files\\chat.txt");
+
     private void checkFile() {
 
-        Path filepath = Paths.get("C:\\socketwebsite\\files\\chat.txt");
-
-        if(Files.notExists(filepath)) {
-            try{
-                Files.createFile(filepath);
-            }catch(IOException e){
-                System.out.println("could not create file at path:" + filepath.toString());
-            }
+        if(Files.notExists(this.filePath)) {
+                createNewFile();
         };
-        System.out.println(Files.exists(filepath));
+
+        file = this.filePath.toFile();
 
 
     }
 
-    private void createNewFile(File file) {
+    private void createNewFile() {
         try {
-            file.createNewFile();
+            Files.createFile(this.filePath);
         } catch (IOException e) {
             System.err.println("Could Not create File");
             e.printStackTrace();
         }
     }
+
+
+
+    public void readFromFile(){
+        try (BufferedReader fileReader = Files.newBufferedReader(this.filePath)){
+            String fileContents = null;
+            while((fileContents = fileReader.readLine()) != null){
+                System.out.println(fileContents);
+            }
+        }catch (IOException e){
+            System.out.println("cannot find this file");
+        }
+    }
+
+
 }
