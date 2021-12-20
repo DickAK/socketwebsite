@@ -26,8 +26,6 @@ public class FileService {
         };
 
         file = this.filePath.toFile();
-
-
     }
 
     private void createNewFile() {
@@ -50,17 +48,16 @@ public class FileService {
         }catch (IOException e){
             System.out.println("cannot find this file");
         }
-
-        System.out.println(fileContents.toString());
         return fileContents.toString();
     }
 
     public void writeToFile(String contentToWrite){
         StringBuilder fileContent = new StringBuilder();
+        fileContent.append(readFromFile());
+        fileContent.append(contentToWrite);
+
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath)){
-            fileContent.append(readFromFile());
-            fileContent.append(contentToWrite);
-            bufferedWriter.write(String.valueOf(fileContent));
+            bufferedWriter.write(fileContent.toString());
         }catch(IOException e){
             System.err.println("had issues opening this file for writing");
         }
