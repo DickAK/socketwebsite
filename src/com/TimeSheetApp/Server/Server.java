@@ -22,6 +22,7 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(this.port);
             System.out.println("Server Is Starting");
             System.out.println(serverSocket.getLocalSocketAddress());
+
             while(true){
                 Socket socket = serverSocket.accept();
 

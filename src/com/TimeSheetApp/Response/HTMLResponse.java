@@ -116,13 +116,11 @@ public class HTMLResponse {
      }
 
      public void generateResponse(){
-         try {
-             PrintStream printStream = new PrintStream(clientSocket.getOutputStream(),true);
-             printStream.println(createHttpHeader());
-             printStream.println(createHtmlPage());
-             printStream.close();
+         try(PrintWriter out = new PrintWriter(this.clientSocket.getOutputStream(),true)){
+             out.println(this.createHttpHeader());
+             out.println(this.createHtmlPage());
          }catch (IOException e){
-             System.err.println("Issue sending the output stream to the client");
+             System.out.println("there was an issue writing the response");
          }
      }
 
