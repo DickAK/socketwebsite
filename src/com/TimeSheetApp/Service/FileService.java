@@ -21,9 +21,10 @@ public class FileService {
 
     private void checkFile() {
 
-        if(Files.notExists(this.filePath)) {
-                createNewFile();
-        };
+        if (Files.notExists(this.filePath)) {
+            createNewFile();
+        }
+        ;
 
         file = this.filePath.toFile();
     }
@@ -37,28 +38,32 @@ public class FileService {
         }
     }
 
-    public String readFromFile(){
+    public String readFromFile() {
         StringBuilder fileContents = new StringBuilder();
-        try (BufferedReader fileReader = Files.newBufferedReader(this.filePath)){
+        try (BufferedReader fileReader = Files.newBufferedReader(this.filePath)) {
 
             do {
-                fileContents.append(String.format("%s \r\n" ,fileReader.readLine()));
-            }while (fileReader.ready());
+                fileContents.append(String.format("%s \r\n", fileReader.readLine()));
+            } while (fileReader.ready());
 
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("cannot find this file");
         }
-        return fileContents.toString();
+
+        return fileContents.toString().trim();
     }
 
-    public void writeToFile(String contentToWrite){
-        StringBuilder fileContent = new StringBuilder();
-        fileContent.append(readFromFile());
-        fileContent.append(contentToWrite);
+    public void writeToFile(String contentToWrite) {
+        StringBuilder fileData = new StringBuilder();
 
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath)){
-            bufferedWriter.write(fileContent.toString());
-        }catch(IOException e){
+        String currentFileContant = null;
+        if(!(currentFileContant = readFromFile()).equals("null"))
+            fileData.append(currentFileContant);
+        fileData.append(contentToWrite);
+
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath)) {
+            bufferedWriter.write(fileData.toString());
+        } catch (IOException e) {
             System.err.println("had issues opening this file for writing");
         }
     }
