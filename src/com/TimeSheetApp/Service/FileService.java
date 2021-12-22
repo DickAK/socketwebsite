@@ -57,9 +57,12 @@ public class FileService {
         StringBuilder fileData = new StringBuilder();
 
         String currentFileContant = null;
-        if(!(currentFileContant = readFromFile()).equals("null"))
-            fileData.append(currentFileContant);
+
+        if(!(currentFileContant = readFromFile()).equals("null")) {
+            fileData.append(currentFileContant).append("\r\n");
+        }
         fileData.append(contentToWrite);
+
 
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath)) {
             bufferedWriter.write(fileData.toString());

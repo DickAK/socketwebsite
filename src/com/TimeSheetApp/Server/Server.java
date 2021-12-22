@@ -21,9 +21,9 @@ public class Server {
         try {
             ServerSocket serverSocket = new ServerSocket(this.port);
             System.out.println("Server Is Starting");
-            System.out.println(serverSocket.getLocalSocketAddress());
 
             while(true){
+                System.out.println("Server Is running on port:" + serverSocket.getLocalPort());
                 Socket socket = serverSocket.accept();
 
                 HTMLResponse response = new HTMLResponse(socket);

@@ -1,13 +1,14 @@
 package com.TimeSheetApp.Response;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import com.TimeSheetApp.Service.FileService;
+
+import java.io.*;
 import java.net.Socket;
+
 
 public class HTMLResponse {
      private final Socket clientSocket;
+     private FileService fileService = new FileService();
 
      public HTMLResponse (Socket clientSocket){
          this.clientSocket = clientSocket;
@@ -99,7 +100,7 @@ public class HTMLResponse {
          stringBuilder.append("<h1> Welcome this is a java socket server chat app </h1>");
 
          stringBuilder.append(" <div class=\"chat-popup\" id=\"myForm\">\n" +
-                 "  <form action=\"/action_page.php\" class=\"form-container\">\n" +
+                 "  <form action=\"//localhost:4848\" method=\"GET\" class=\"form-container\">\n" +
                  "    <h1>Chat</h1>\n" +
                  "\n" +
                  "    <label for=\"msg\"><b>Message</b></label>\n" +
@@ -116,10 +117,36 @@ public class HTMLResponse {
      }
 
      public void generateResponse(){
-         try(PrintWriter out = new PrintWriter(this.clientSocket.getOutputStream(),true)){
-             out.println(this.createHttpHeader());
-             out.println(this.createHtmlPage());
-         }catch (IOException e){
+         StringBuilder stringBuilder = new StringBuilder();
+         stringBuilder.append(createHttpHeader());
+         stringBuilder.append("\r\n");
+         stringBuilder.append(createHtmlPage());
+
+
+
+         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             PrintWriter out = new PrintWriter(this.clientSocket.getOutputStream(),true)){
+
+             String requestContent = null;
+
+             String params = null;
+             while((requestContent = bufferedReader.readLine()) != null){
+                 if(requestContent.indexOf("?msg=") > 0){
+                     params = requestContent.substring(requestContent.indexOf("?msg=") + 5)
+                             .replaceAll("HTTP/1.1","").replaceAll("(:\\.).","");
+
+
+
+
+                 }
+
+                 if(requestContent.isEmpty())break;
+             }
+             System.out.println(params);
+             fileService.writeToFile(params);
+
+             out.println(stringBuilder);
+         }catch (Exception e){
              System.out.println("there was an issue writing the response");
          }
      }
