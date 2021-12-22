@@ -130,16 +130,16 @@ public class HTMLResponse {
              String requestContent = null;
 
              String params = null;
+
              while((requestContent = bufferedReader.readLine()) != null){
-                 if(requestContent.indexOf("?msg=") > 0){
-                     params = requestContent.substring(requestContent.indexOf("?msg=") + 5)
-                             .replaceAll("HTTP/1.1","").replaceAll("(:\\.).","");
-
-
-
+                 if(requestContent.indexOf("GET") > -1){
+                     params = requestContent.substring(requestContent.indexOf("GET")+10 )
+                             .replaceAll("HTTP/1.1","")
+                     .replaceAll("\\+"," ");
 
                  }
 
+                 System.out.println(requestContent);
                  if(requestContent.isEmpty())break;
              }
              System.out.println(params);
