@@ -15,7 +15,6 @@ public class HTMLResponse {
      }
 
      private String createHttpHeader(){
-
          return "HTTP/1.1 200 ok" +
                  "\r\n" +
                  "content-type: text/html" +
@@ -133,7 +132,7 @@ public class HTMLResponse {
 
              while((requestContent = bufferedReader.readLine()) != null){
                  if(requestContent.indexOf("GET") > -1){
-                     params = requestContent.substring(requestContent.indexOf("GET")+10 )
+                     params = requestContent.substring(requestContent.indexOf("GET") + 10 )
                              .replaceAll("HTTP/1.1","")
                      .replaceAll("\\+"," ");
 
